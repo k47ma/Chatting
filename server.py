@@ -48,7 +48,3 @@ class SendMessageThread(threading.Thread):
                 print "Server: " + message
             except Exception:
                 break
-
-
-if __name__ == '__main__':
-    Server()

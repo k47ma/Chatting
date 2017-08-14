@@ -6,7 +6,7 @@ class Client(object):
     def __init__(self):
         object.__init__(self)
         self.s = socket.socket()
-        host = "TOR05INTERND1"
+        host = socket.gethostname()
         port = 12345
         self.s.connect((host, port))
         print "connected to:", socket.getaddrinfo(host, port)[1][-1]
@@ -34,7 +34,3 @@ class SendMessageThread(threading.Thread):
         message = raw_input()
         self.connection.send(message)
         print "Client: " + message
-
-
-if __name__ == '__main__':
-    Client()
