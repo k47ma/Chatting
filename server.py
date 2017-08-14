@@ -3,6 +3,10 @@ import threading
 from tkinter import *
 
 
+host = socket.gethostbyname(socket.gethostname())
+port = 0
+
+
 class ServerInterface(Tk):
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
@@ -31,6 +35,8 @@ class ServerInterface(Tk):
 class Server(threading.Thread):
     def __init__(self, controller):
         threading.Thread.__init__(self)
+
+        global host, port
 
         self.entry = controller.entry
         self.textarea = controller.textarea
@@ -90,6 +96,45 @@ def show_message(message, textarea):
     thread.start()
 
 
+class AskPort(Tk):
+    def __init__(self):
+        Tk.__init__(self)
+
+        global host
+
+        self.wm_geometry("250x100")
+        self.wm_title("Connection Configuration")
+
+        container = Frame(self)
+        container.pack(fill=BOTH, expand=True, padx=6, pady=6)
+
+        container.columnconfigure(1, weight=1)
+
+        label1 = Label(container, text="Host:")
+        label1.grid(row=0, column=0)
+
+        label2 = Label(container, text=host)
+        label2.grid(row=0, column=1)
+
+        label3 = Label(container, text="Port Number:")
+        label3.grid(row=1, column=0)
+
+        self.entry = Entry(container)
+        self.entry.grid(row=1, column=1)
+
+        self.btn = Button(self, text="OK", command=self.save, width=5)
+        self.btn.pack(side=BOTTOM, padx=6, pady=6)
+
+    def save(self):
+        global port
+        port_number = int(self.entry.get())
+        port = port_number
+        self.destroy()
+
+
 if __name__ == '__main__':
+    root = AskPort()
+    root.mainloop()
+
     chatting = ServerInterface()
     chatting.mainloop()

@@ -3,6 +3,10 @@ import threading
 from tkinter import *
 
 
+host = ""
+port = 0
+
+
 class ClientInterface(Tk):
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
@@ -35,9 +39,8 @@ class Client(threading.Thread):
         self.textarea = controller.textarea
 
     def run(self):
+        global host, port
         s = socket.socket()
-        host = socket.gethostname()
-        port = 12345
         try:
             s.connect((host, port))
         except Exception:
@@ -91,6 +94,45 @@ def show_message(message, textarea):
     thread.start()
 
 
+class AskPort(Tk):
+    def __init__(self):
+        Tk.__init__(self)
+
+        global host
+
+        self.wm_geometry("250x100")
+        self.wm_title("Connection Configuration")
+
+        container = Frame(self)
+        container.pack(fill=BOTH, expand=True, padx=6, pady=6)
+
+        container.columnconfigure(1, weight=1)
+
+        label1 = Label(container, text="Host:")
+        label1.grid(row=0, column=0)
+
+        self.entry1 = Entry(container)
+        self.entry1.grid(row=0, column=1)
+
+        label3 = Label(container, text="Port Number:")
+        label3.grid(row=1, column=0)
+
+        self.entry2 = Entry(container)
+        self.entry2.grid(row=1, column=1)
+
+        self.btn = Button(self, text="OK", command=self.save, width=5)
+        self.btn.pack(side=BOTTOM, padx=6, pady=6)
+
+    def save(self):
+        global port
+        port_number = int(self.entry2.get())
+        port = port_number
+        self.destroy()
+
+
 if __name__ == '__main__':
+    root = AskPort()
+    root.mainloop()
+
     client = ClientInterface()
     client.mainloop()
