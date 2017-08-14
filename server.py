@@ -3,7 +3,7 @@ import threading
 from tkinter import *
 
 
-host = socket.gethostbyname(socket.gethostname())
+host = socket.gethostname()
 port = 0
 
 
@@ -11,7 +11,7 @@ class ServerInterface(Tk):
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
 
-        self.wm_title("Chatting")
+        self.wm_title("Chatting - Server")
         self.wm_geometry("500x300")
 
         container = Frame(self)
@@ -23,6 +23,7 @@ class ServerInterface(Tk):
         self.textarea = Text(container)
         self.textarea.pack(side=TOP, padx=6, pady=6, fill=BOTH, expand=True)
         self.textarea.insert(END, "Waiting for connection...\n")
+        self.textarea.insert(END, "Host: " + host + "\nPort Number: " + str(port) + "\n")
 
         self.setup_server()
 

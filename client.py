@@ -11,7 +11,7 @@ class ClientInterface(Tk):
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
 
-        self.wm_title("Chatting")
+        self.wm_title("Chatting - Client")
         self.wm_geometry("500x300")
 
         container = Frame(self)
@@ -49,7 +49,6 @@ class Client(threading.Thread):
 
         self.entry["state"] = NORMAL
         self.entry.bind("<Return>", lambda x: self.send_message(s))
-
         show_message("connected to: " + str(socket.getaddrinfo(host, port)[1][-1]), self.textarea)
         ReceiveMessageThread(s, self.textarea).start()
 
