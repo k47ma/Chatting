@@ -15,10 +15,10 @@ class ClientInterface(Tk):
         self.wm_geometry("500x300")
 
         container = Frame(self)
-        container.pack(fill=BOTH, expand=True)
+        container.pack(fill="both", expand=True)
 
-        self.entry = Entry(container, state=DISABLED)
-        self.entry.pack(side=BOTTOM, padx=6, pady=(0, 6), fill=X)
+        self.entry = Entry(container, state="disabled")
+        self.entry.pack(side="bottom", padx=6, pady=(0, 6), fill="x")
 
         self.textarea = Text(container)
         self.textarea.pack(side=TOP, padx=6, pady=6, fill=BOTH, expand=True)
@@ -118,14 +118,15 @@ class AskPort(Tk):
 
         self.entry2 = Entry(container)
         self.entry2.grid(row=1, column=1)
+        self.entry2.bind("<Return>", self.save)
 
         self.btn = Button(self, text="OK", command=self.save, width=5)
         self.btn.pack(side=BOTTOM, padx=6, pady=6)
 
-    def save(self):
-        global port
-        port_number = int(self.entry2.get())
-        port = port_number
+    def save(self, *args):
+        global host, port
+        host = self.entry1.get()
+        port = int(self.entry2.get())
         self.destroy()
 
 

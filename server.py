@@ -122,11 +122,12 @@ class AskPort(Tk):
 
         self.entry = Entry(container)
         self.entry.grid(row=1, column=1)
+        self.entry.bind("<Return>", self.save)
 
         self.btn = Button(self, text="OK", command=self.save, width=5)
         self.btn.pack(side=BOTTOM, padx=6, pady=6)
 
-    def save(self):
+    def save(self, *args):
         global port
         port_number = int(self.entry.get())
         port = port_number
