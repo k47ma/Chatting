@@ -21,7 +21,7 @@ class ClientInterface(Tk):
         self.entry.pack(side="bottom", padx=6, pady=(0, 6), fill="x")
 
         self.textarea = Text(container)
-        self.textarea.pack(side=TOP, padx=6, pady=6, fill=BOTH, expand=True)
+        self.textarea.pack(side=TOP, padx=6, pady=6, fill=BOTH)
 
         self.setup_server()
 
@@ -49,7 +49,6 @@ class Client(threading.Thread):
 
         self.entry["state"] = NORMAL
         self.entry.bind("<Return>", lambda x: self.send_message(s))
-        show_message("connected to: " + str(socket.getaddrinfo(host, port)[1][-1]), self.textarea)
         ReceiveMessageThread(s, self.textarea).start()
 
     def send_message(self, connection):

@@ -3,7 +3,7 @@ import threading
 from tkinter import *
 
 
-host = socket.gethostname()
+host = socket.gethostbyname(socket.gethostname())
 port = 0
 
 
@@ -87,7 +87,10 @@ class ShowMessage(threading.Thread):
         self.textarea = textarea
 
     def run(self):
-        self.textarea.insert(END, self.message)
+        try:
+            self.textarea.insert(END, self.message)
+        except TclError:
+            pass
         self.textarea.see(END)
 
 
